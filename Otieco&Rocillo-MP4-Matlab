@@ -1,0 +1,42 @@
+%MP Problem 4
+
+%Variables
+hi = input('Enter initial height of the projectile above the ground in meters: ');
+Vo = input('Enter magnitude of the velocity in m/s: ');
+angle = input('Enter angle in degrees with respect to the +x-axis at which the projectile is fired: ');
+ax = input('Enter x-component of the acceleration in m/s^2: ');
+ay = input('Enter y-component of the acceleration in m/s^2: ');
+
+%Error Code, Used IF Statements
+if ay == 0 
+    error('Error! Vertical acceleration is zero, there would be no free fall.')
+end    
+
+vx = Vo*cosd(angle); %Projectile Formulas
+vy = Vo*sind(angle);
+
+tmax = max(roots([(ay/2),vy,hi])); %Max Time
+d = 0:0.01:tmax+1; %Distance
+x = zeros(1,length(d)+1);
+y = zeros(1,length(d)+1);
+
+t=0.01;
+x(1)=0;
+y(1)=hi;
+
+%Solving & Plotting Time, Time Was Not Given. 
+for i = 1:length(d)-1
+    xt = ((ax*(t^2))/2) + (vx*t);
+    yt = ((ay*(t^2))/2) + (vy*t) + hi;
+    x(i+1) = xt;
+    y(i+1) = yt;
+    t=t+0.01;
+end
+
+%Final x and Final y
+x(length(d)+1)=(ax/2)*tmax^2 + vx*0.01;
+y(length(d)+1)=0;
+
+%Plotting Codes For The Graph
+plot(x,y,'-.ro','linewidth',0.5); xlabel('Distance'); ylabel('Height'); grid on; title('MP4: Projectile Motion');xlim([0 max(x)+1]); ylim([0 max(y)+1])
+
